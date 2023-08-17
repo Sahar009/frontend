@@ -16,10 +16,9 @@ const Dashboard = () => {
   const [watermarkText, setWatermarkText] = useState("");
   const [watermarkPosition, setWatermarkPosition] = useState({ x: 0, y: 0 });
   const [watermarkDragging, setWatermarkDragging] = useState(false);
-  const [watermarkSize, setWatermarkSize] = useState(50);; // Initial size of watermark
-  //new stuffs
+  const [watermarkSize, setWatermarkSize] = useState(50);
 
-  const [filterValue, setFilterValue] = useState(0); // Initial value for the filter
+  // const [filterValue, setFilterValue] = useState(0); // Initial value for the filter
   
 
   
@@ -47,18 +46,18 @@ const Dashboard = () => {
         'http://localhost:8080/api/audio/downloadaudio',
         formData,
         {
-          responseType: 'blob', // Set the response type to blob
+          responseType: 'blob', 
           withCredentials: true,
         }
       );
 
-      const audioBlob = response.data; // Blob containing the audio data
+      const audioBlob = response.data; 
 
       // Create a download link for the audio blob
       const audioUrl = URL.createObjectURL(audioBlob);
       const downloadAnchor = document.createElement('a');
       downloadAnchor.href = audioUrl;
-      downloadAnchor.download = 'extracted_audio.mp3'; // Set the desired filename
+      downloadAnchor.download = 'extracted_audio.mp3'; // 
       downloadAnchor.click();
 
       toast.success('Audio file saved successfully.');
@@ -74,7 +73,7 @@ const Dashboard = () => {
 
   const handleWatermarkDragStart = (e) => {
     e.preventDefault();
-    // Prevent default behavior that interferes with drag-and-drop
+    
   };
 
   const handleWatermarkDrag = (e) => {
@@ -103,7 +102,7 @@ const Dashboard = () => {
     }
 
     const formData = new FormData();
-    formData.append('video', selectedVideo); // Make sure 'video' matches the key used in the backend
+    formData.append('video', selectedVideo); 
     formData.append('watermarkText', watermarkText);
 
     try {
@@ -181,7 +180,7 @@ const Dashboard = () => {
       const downloadUrl = 'http://localhost:8080/api/audio/downloadaudio/editedvideo';
       const downloadAnchor = document.createElement('a');
       downloadAnchor.href = downloadUrl;
-      downloadAnchor.download = 'watermarked_video.mp4'; // Set the desired filename
+      downloadAnchor.download = 'watermarked_video.mp4'; 
       downloadAnchor.click();
     } catch (error) {
       console.error('Error saving watermarked video:', error);
@@ -201,7 +200,7 @@ const Dashboard = () => {
       formData.append('watermarkPositionX', watermarkPosition.x);
       formData.append('watermarkPositionY', watermarkPosition.y);
   
-      // Make a POST request to save the edited video with watermark
+      
       await axios.post(
         'http://localhost:8080/api/addwatermark',
         formData,
@@ -281,7 +280,7 @@ const Dashboard = () => {
                 cursor: 'grab',
                 zIndex: 1000,
               }}
-              draggable // Add the draggable attribute
+              draggable 
               onDragStart={handleWatermarkDragStart}
               onDrag={handleWatermarkDrag}
               onDragEnd={handleWatermarkDragEnd}
@@ -291,8 +290,8 @@ const Dashboard = () => {
   alt="Watermark"
   className="watermark-image"
   style={{
-    width: `${watermarkSize}px`, // Use the watermarkSize state here
-    height: `${watermarkSize}px`, // Use the watermarkSize state here
+    width: `${watermarkSize}px`, 
+    height: `${watermarkSize}px`,
     objectFit: 'cover',
   }}
 />
@@ -327,7 +326,7 @@ const Dashboard = () => {
         <input
   type="range"
   min="100"
-  max="500" // You can adjust the range as needed
+  max="500"
   step="10"
   value={watermarkSize}
   onChange={handleWatermarkSizeChange}
@@ -341,16 +340,7 @@ const Dashboard = () => {
       <div>
      
        
-        {/* <button onClick={handleClick}>cliick!</button>
-       <div
-        className="container"
-        style={{
-          background: 'red',
-          height: '40px',
-          width: `${width}%`,
-          transition: 'width 0.3s', // Add a smooth transition effect
-        }}
-      ></div> */}
+     
       </div>
       <h1 className='inp'>Site still in progress !</h1>
 
