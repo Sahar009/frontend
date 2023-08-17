@@ -3,7 +3,8 @@ import axios from 'axios'
 import { toast } from "react-toastify";
 
 // const BACKEND_URL = process.env.REACT_BACKEND_URL;
-const BACKEND_URL = 'http://localhost:8080'
+const BACKEND_URL ='https://frontend-sable-ten.vercel.app/'
+//'http://localhost:8080'
 
 export const validateEmail = (email) => {
     return email.match( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
