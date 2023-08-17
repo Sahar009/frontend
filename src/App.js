@@ -1,24 +1,67 @@
-import logo from './logo.svg';
+
+import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import './App.css';
+import Home from './pages/Home/Home';
+import Login from './pages/Auth/Login';
+import Sidebar from './component/sidebar/Sidebar';
+import Layout from './component/layout/Layout';
+import Dashboard from './pages/dashboard/Dashboard';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
+import Register from './pages/Auth/Register';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getLoginStatus } from './service/authService';
+import { SET_LOGIN } from './redux/features/authSlice';
+import Contact from './pages/contact/Contact';
+
+
+axios.defaults.withCredentials = true
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const dispatch = useDispatch()
+  useEffect(() => {
+    async function loginStatus(){
+      const status = await getLoginStatus()
+      dispatch(SET_LOGIN(status))
+    }
+    loginStatus()
+  
+  }, [dispatch])
+  
+  return (<>
+<ToastContainer/>
+   <BrowserRouter>
+   
+   <Routes>
+<Route path='/' element={<Home/>}/>
+<Route path='/login' element={<Login/>}/>
+<Route path="/register" element={<Register/>} />
+
+
+<Route path='/dashboard' element={
+  <Layout>
+    <Dashboard/>
+  </Layout>
+}/>
+        <Route
+          path="/contact-us"
+          element={
+            <Sidebar>
+              <Layout>
+              <Contact />
+              </Layout>
+            </Sidebar>
+          }
+        />
+
+   </Routes>
+   
+   
+   
+   </BrowserRouter>
+   </>
   );
 }
 

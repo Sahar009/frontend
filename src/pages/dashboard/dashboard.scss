@@ -1,0 +1,98 @@
+.dashboard {
+    // background: url(../../assets/Bacca.jpg);
+    text-align: center;
+    justify-content: center;
+    color: #fff;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  .dashboard h2 {
+    font-size: 3rem;
+    font-weight: 200;
+    line-height: 1.4;
+    text-transform: uppercase;
+    margin: 1.5rem 0;
+    padding-bottom: 1rem;
+  }
+  
+  form > * {
+    width: 100%;
+    max-width: 50rem;
+    margin: 3rem auto;
+  }
+  
+  form input {
+    padding: 1rem;
+    background: transparent;
+    border: 1px solid #777;
+    border-radius: 5px 0 0 5px;
+    color: #0b0a0a;
+    outline: none;
+    width: 80%;
+    font-size: 1.6rem;
+  }
+  
+  form button {
+    font-size: 1.6rem;
+    font-weight: 500;
+    cursor: pointer;
+    height: 4rem;
+    color: #fff;
+  background: orangered;
+  padding: 5px;
+  border: none;
+  transition: all 0.3s;
+  }
+  form button:hover {
+    transform: translateY(-2px);
+  }
+ 
+  .video-player {
+    position: relative;
+    margin: 20px auto; 
+    width: 700px;
+    height: 600px;
+    overflow: hidden;
+  }
+  .dropped-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  .watermark-image {
+    position: absolute;
+   width: 100%;
+    height: 100%;
+    cursor: grab;
+  }
+  .tools{
+    width: 50%;
+    border-radius: 3px;
+    display: flex;
+    background-color: #0b0a0a;
+    gap: 1rem;
+    height: 5rem;
+    margin: 20px auto; 
+    color: darkblue;
+  }
+  .watermark-container:active{
+    cursor: grabbing;
+  }
+  .watermark-image:active {
+    cursor: grabbing;
+  }
+ 
+  
+ 
+
+  @media screen and (max-width: 600px) {
+    form input {
+      width: 60%;
+    }
+  }
+  
