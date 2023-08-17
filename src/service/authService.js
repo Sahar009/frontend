@@ -3,7 +3,7 @@ import axios from 'axios'
 import { toast } from "react-toastify";
 
 // const BACKEND_URL = process.env.REACT_BACKEND_URL;
-const BACKEND_URL ='https://frontend-sable-ten.vercel.app/'
+const BACKEND_URL ='https://frontend-sable-ten.vercel.app'
 //'http://localhost:8080'
 
 export const validateEmail = (email) => {
