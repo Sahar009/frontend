@@ -232,7 +232,7 @@ const Dashboard = () => {
         <h2>Youtube Video Editor!</h2>
         <form>
           <div className="form-control">
-            <input type="file" accept="video/*" onChange={handleVideoChange} />
+            <input type="file" accept="video/*" onChange={handleVideoChange}  style={{paddingBottom:'1rem'}}/>
             <input
               type="text"
               placeholder="Enter youtube link..."
@@ -242,9 +242,10 @@ const Dashboard = () => {
             <button onClick={handleGenerate}>Generate</button>
           </div>
           <input
+          
             type="file"
             accept="image/*"
-            style={{ display: 'none' }}
+            style={{ display: 'none', }}
             ref={watermarkInputRef}
             onChange={handleWatermarkInputChange}
           />
@@ -351,6 +352,7 @@ const Dashboard = () => {
         }}
       ></div> */}
       </div>
+      <h1 className='inp'>Site still in progress !</h1>
 
     </div>
     </Sidebar>

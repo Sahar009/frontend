@@ -23,14 +23,15 @@
   }
   
   form input {
+    margin-top: 1rem;
     padding: 1rem;
     background: transparent;
-    border: 1px solid #777;
-    border-radius: 5px 0 0 5px;
+    border: .5px solid #77777782;
+    border-radius: 5px ;
     color: #0b0a0a;
     outline: none;
-    width: 80%;
-    font-size: 1.6rem;
+    width: 100%;
+    font-size: 1.3rem;
   }
   
   form button {
@@ -49,6 +50,8 @@
   }
  
   .video-player {
+    border: 5px solid black;
+    border-radius: 10px;
     position: relative;
     margin: 20px auto; 
     width: 700px;
@@ -88,7 +91,22 @@
   }
  
   
+ .inp{
+  text-align: center;
+  animation: bounce 0.8s ease infinite alternate;
+ }
  
+
+
+@keyframes bounce {
+  0% {
+    transform: translateY(-25%);
+  }
+  100% {
+    transform: translateY(25%);
+  }
+}
+
 
   @media screen and (max-width: 600px) {
     form input {
