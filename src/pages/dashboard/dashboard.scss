@@ -106,7 +106,28 @@
     transform: translateY(25%);
   }
 }
+@media screen and (max-width: 600px) {
+  .form-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
+  form input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  form button {
+    width: 100%;
+  }
+
+  .tools {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+}
 
   @media screen and (max-width: 600px) {
     form input {

@@ -7,7 +7,7 @@ import { RegisterUser, validateEmail } from "../../service/authService";
 import {useDispatch} from 'react-redux';
 import Loader from '../../component/loader/Loader'
 import {Link, useNavigate} from 'react-router-dom'
-import { SET_LOGIN, SET_NAME } from "../../redux/features/authSlice";
+
 import { toast } from 'react-toastify';
 
 const Register = () => {

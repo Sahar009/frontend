@@ -6,6 +6,7 @@ import axios from 'axios';
 import {BsFillPlusCircleFill} from 'react-icons/bs';
 import Sidebar from '../../component/sidebar/Sidebar';
 import { BiImageAdd } from 'react-icons/bi';
+import { useEffect } from 'react';
 
 const Dashboard = () => {
   const [youtubeLink, setYoutubeLink] = useState('');
@@ -17,6 +18,8 @@ const Dashboard = () => {
   const [watermarkPosition, setWatermarkPosition] = useState({ x: 0, y: 0 });
   const [watermarkDragging, setWatermarkDragging] = useState(false);
   const [watermarkSize, setWatermarkSize] = useState(50);
+// At the beginning of your component
+const [watermarkDragOffset, setWatermarkDragOffset] = useState({ x: 0, y: 0 });
 
   // const [filterValue, setFilterValue] = useState(0); // Initial value for the filter
   
@@ -73,24 +76,52 @@ const Dashboard = () => {
 
   const handleWatermarkDragStart = (e) => {
     e.preventDefault();
-    
+  
+    // Calculate the offset between the cursor and the top-left corner of the watermark container
+    const offsetX = e.clientX - watermarkPosition.x;
+    const offsetY = e.clientY - watermarkPosition.y;
+  
+    setWatermarkDragging(true);
+    setWatermarkDragOffset({ x: offsetX, y: offsetY });
   };
+  
 
   const handleWatermarkDrag = (e) => {
-    if (!watermarkDragging) {
-      setWatermarkDragging(true);
-      return;
+    if (!watermarkDragging) return;
+  
+    const playerRect = document.querySelector('.video-player').getBoundingClientRect();
+    const newPositionX = e.clientX - playerRect.left - watermarkDragOffset.x;
+    const newPositionY = e.clientY - playerRect.top - watermarkDragOffset.y;
+  
+    console.log('newPositionY:', newPositionY);
+    console.log('e.clientY:', e.clientY);
+    console.log('playerRect.top:', playerRect.top);
+    console.log('watermarkDragOffset.y:', watermarkDragOffset.y);
+    const maxX = playerRect.width - watermarkSize;
+    const maxY = playerRect.height - watermarkSize;
+    const clampedX = Math.min(Math.max(newPositionX, 0), maxX);
+    const clampedY = Math.min(Math.max(newPositionY, 0), maxY);
+
+    setWatermarkPosition({ x: clampedX, y: clampedY });
+  };
+
+  const handleWatermarkDragEnd = (e) => {
+    if (watermarkDragging) {
+      const playerRect = document.querySelector('.video-player').getBoundingClientRect();
+      const newPositionX = e.clientX - playerRect.left - watermarkDragOffset.x;
+      const newPositionY = e.clientY - playerRect.top - watermarkDragOffset.y;
+  
+      const maxX = playerRect.width - watermarkSize;
+      const maxY = playerRect.height - watermarkSize;
+      const clampedX = Math.min(Math.max(newPositionX, 0), maxX);
+      const clampedY = Math.min(Math.max(newPositionY, 0), maxY);
+  
+      setWatermarkPosition({ x: clampedX, y: clampedY });
+      setWatermarkDragging(false);
+      setWatermarkDragOffset({ x: 0, y: 0 });
     }
-
-    const newPositionX = e.clientX - e.target.width / 2;
-    const newPositionY = e.clientY - e.target.height / 2;
-
-    setWatermarkPosition({ x: newPositionX, y: newPositionY });
   };
-
-  const handleWatermarkDragEnd = () => {
-    setWatermarkDragging(true);
-  };
+  
 
  
   
@@ -223,6 +254,18 @@ const Dashboard = () => {
     }
   };
   
+
+  useEffect(() => {
+    if (watermarkDragging) {
+      document.addEventListener('mousemove', handleWatermarkDrag);
+      document.addEventListener('mouseup', handleWatermarkDragEnd);
+      return () => {
+        document.removeEventListener('mousemove', handleWatermarkDrag);
+        document.removeEventListener('mouseup', handleWatermarkDragEnd);
+      };
+    }
+  }, [watermarkDragging]);
+  
   return (
     <Sidebar handleSaveAudio={handleSaveAudio} watermarkSize={watermarkSize}
     handleWatermarkSizeChange={handleWatermarkSizeChange}>
@@ -271,31 +314,31 @@ const Dashboard = () => {
             }}
           />
           {watermarkImage && (
-            <div
-              className="watermark-container"
-              style={{
-                position: 'absolute',
-                top: watermarkPosition.y,
-                left: watermarkPosition.x,
-                cursor: 'grab',
-                zIndex: 1000,
-              }}
-              draggable 
-              onDragStart={handleWatermarkDragStart}
-              onDrag={handleWatermarkDrag}
-              onDragEnd={handleWatermarkDragEnd}
-            >
-              <img
-  src={watermarkImage}
-  alt="Watermark"
-  className="watermark-image"
-  style={{
-    width: `${watermarkSize}px`, 
-    height: `${watermarkSize}px`,
-    objectFit: 'cover',
-  }}
-/>
-            </div>
+          <div
+          className="watermark-container"
+          style={{
+            position: 'absolute',
+            top: watermarkPosition.y,
+            left: watermarkPosition.x,
+            zIndex: 1000,
+            userSelect: 'none',
+          }}
+          onMouseDown={handleWatermarkDragStart} // Add onMouseDown event handler
+        >
+          <img
+            src={watermarkImage}
+            alt="Watermark"
+            className="watermark-image"
+            style={{
+              width: `${watermarkSize}px`,
+              height: `${watermarkSize}px`,
+              objectFit: 'cover',
+              cursor: watermarkDragging ? 'grabbing' : 'grab', // Move the cursor style here
+            }}
+            onMouseDown={handleWatermarkDragStart} // Add onMouseDown event handler
+          />
+        </div>
+        
           )}
         </div>
       )}
